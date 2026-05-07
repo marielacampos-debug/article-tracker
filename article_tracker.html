@@ -228,7 +228,7 @@ document.addEventListener("click",e=>{
 
 // Site dropdown
 const allSites=["All",...Array.from(new Set([...ADDED,...REFRESHED,...REMOVED].map(r=>r[S]).filter(Boolean))).sort()];
-(()=>{const ss=document.getElementById("site-sel");allSites.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s==="All"?"All Sites":s;ss.appendChild(o);});ss.onchange=()=>{state.site=ss.value;render();};})();
+
 
 // Multi-select type dropdown
 function toggleTypeDropdown(e){e.stopPropagation();document.getElementById("type-dropdown").classList.toggle("open");}
@@ -267,7 +267,7 @@ function updateTypeTrigger(){
 }
 
 // Filters
-function siteF(r){return state.site==="All"||r[S]===state.site;}
+function siteF(r){return state.sites.size===0||state.sites.has(r[S]);}
 function typeF(r){return state.types.size===0||state.types.has(r[T]);}
 function searchF(r){if(!state.q)return true;const q=state.q.toLowerCase();return r[N].toLowerCase().includes(q)||(r[S]||"").toLowerCase().includes(q);}
 function filterRows(rows){return rows.filter(r=>r[M]===state.month&&siteF(r)&&typeF(r)&&searchF(r));}
