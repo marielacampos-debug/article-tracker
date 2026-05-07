@@ -257,10 +257,10 @@ a{text-decoration:none}
 .type-trigger.active{border-color:#c7d2fe;background:#eef2ff;color:#4338ca;font-weight:600}
 .type-dropdown{position:absolute;top:calc(100% + 4px);right:0;left:auto;background:#fff;border:1px solid #e2e8f0;border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:9999;min-width:230px;padding:6px 0;display:none;max-height:320px;overflow-y:auto}
 .type-dropdown.open{display:block}
-.type-option{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;font-size:13px;color:#475569;user-select:none;border-radius:6px;margin:1px 4px}
+.type-option{display:flex;flex-direction:row;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;font-size:13px;color:#475569;user-select:none;width:100%}
 .type-option:hover{background:#f1f5f9}
 .type-option input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:#6366f1;flex-shrink:0}
-.type-count-pill{margin-left:auto;font-size:11px;font-weight:600;color:#94a3b8;min-width:22px;text-align:center}
+.type-count-pill{font-size:11px;font-weight:600;color:#94a3b8;background:#f1f5f9;padding:1px 7px;border-radius:10px;margin-left:auto}
 .selected-count{background:#6366f1;color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:2px}
 </style>
 </head>
@@ -418,6 +418,7 @@ function buildTypeDropdown(availTypes,countMap){
   const allDiv=document.createElement("div");allDiv.className="type-option";
   const allCb=document.createElement("input");allCb.type="checkbox";allCb.checked=state.types.size===0;
   const allSpan=document.createElement("span");allSpan.textContent="All Types";allSpan.style.fontWeight="600";
+  allDiv.style.cssText="display:flex;flex-direction:row;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;width:100%";
   allDiv.append(allCb,allSpan);
   allDiv.onclick=()=>{state.types=new Set();updateTypeTrigger();render();};
   dd.appendChild(allDiv);
@@ -431,6 +432,7 @@ function buildTypeDropdown(availTypes,countMap){
     const badge=document.createElement("span");badge.className="badge";
     badge.style.cssText=`background:${c.bg};color:${c.text};border-color:${c.border}`;badge.textContent=type;
     const pill=document.createElement("span");pill.className="type-count-pill";pill.textContent=countMap[type]||0;
+    d.style.cssText="display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;user-select:none";
     d.append(cb,badge,pill);
     d.onclick=()=>{cb.checked=!cb.checked;if(cb.checked)state.types.add(type);else state.types.delete(type);updateTypeTrigger();render();};
     dd.appendChild(d);
